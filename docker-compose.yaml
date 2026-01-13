@@ -1,0 +1,29 @@
+services:
+  grafana:
+    image: grafana/grafana-enterprise
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./datasource.yaml:/etc/grafana/provisioning/datasources/provision.yaml:ro
+      - ./dashboards:/etc/grafana/provisioning/dashboards:ro
+    ports:
+      - 3000:3000/tcp
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-storage:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=1y'
+    restart: unless-stopped
+
+  nut-exporter:
+    image: druggeri/nut_exporter
+    restart: unless-stopped
+
+volumes:
+  grafana-storage:
+  prometheus-storage:

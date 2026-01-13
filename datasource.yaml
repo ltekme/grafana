@@ -1,0 +1,13 @@
+datasources:
+  - name: Prometheus
+    type: prometheus
+    url: http://prometheus:9090
+    access: proxy
+    jsonData:
+      httpMethod: POST
+      manageAlerts: true
+      allowAsRecordingRulesTarget: true
+      prometheusType: Prometheus
+      cacheLevel: 'Low'
+      disableRecordingRules: false
+      timeInterval: 15s

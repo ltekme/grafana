@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'ups-primary'
+    metrics_path: /ups_metrics
+    static_configs:
+      - targets: ['nut-exporter:9199']
+        labels:
+          ups:  "primary"
+    params:
+      ups: [ "ups" ]
+      username: [ "monuser" ]
+      password: [ "secret" ]
+      server: [ "ha.internal.ltek.me" ]
