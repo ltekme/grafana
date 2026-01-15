@@ -3,21 +3,41 @@ services:
     image: grafana/grafana-enterprise
     volumes:
       - grafana-storage:/var/lib/grafana
-      - ./datasource.yaml:/etc/grafana/provisioning/datasources/provision.yaml:ro
-      - ./dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana:/etc/grafana/provisioning:ro
     ports:
       - 3000:3000/tcp
     restart: unless-stopped
+    depends_on:
+      - prometheus
+      - loki
 
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./prometheus.yaml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus-config.yaml:/etc/prometheus/prometheus.yml:ro
       - prometheus-storage:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
       - '--storage.tsdb.retention.time=1y'
+    restart: unless-stopped
+    depends_on:
+      - nut-exporter
+
+  loki:
+    image: grafana/loki
+    volumes:
+      - loki-storage:/loki
+      - ./loki.yaml:/etc/loki/config.yaml:ro
+    depends_on:
+      - alloy
+
+  alloy:
+    image: grafana/alloy
+    volumes:
+      - ./alloy-config.alloy:/etc/alloy/config.alloy:ro
+    ports:
+      - 514:514/udp
     restart: unless-stopped
 
   nut-exporter:
@@ -27,3 +47,4 @@ services:
 volumes:
   grafana-storage:
   prometheus-storage:
+  loki-storage:

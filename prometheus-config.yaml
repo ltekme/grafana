@@ -12,4 +12,4 @@ scrape_configs:
       ups: [ "ups" ]
       username: [ "monuser" ]
       password: [ "secret" ]
-      server: [ "ha.internal.ltek.me" ]
+      server: [ "ups.internal.ltek.me" ]
