@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 0,
+  "id": 1,
   "links": [],
   "panels": [
     {
@@ -30,7 +30,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
+        "h": 20,
         "w": 24,
         "x": 0,
         "y": 0
@@ -57,6 +57,18 @@
           "legendFormat": "",
           "queryType": "range",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "P8E80F9AEF21F6940"
+          },
+          "direction": "backward",
+          "editorMode": "builder",
+          "expr": "{service=\"rsyslog\"} |= ``",
+          "hide": false,
+          "queryType": "range",
+          "refId": "B"
         }
       ],
       "title": "Latest Logs",
@@ -78,5 +90,5 @@
   "timezone": "browser",
   "title": "Logs",
   "uid": "adbx4bz",
-  "version": 3
+  "version": 2
 }

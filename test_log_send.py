@@ -4,7 +4,7 @@ from datetime import datetime, UTC
 
 
 def main():
-    client = SyslogClientRFC3164("127.0.0.1", 514, proto="UCP")
+    client = SyslogClientRFC3164("127.0.0.1", 5141, proto="UDP")
     print("Started Sending Test Logs")
     count = 0
     while True:

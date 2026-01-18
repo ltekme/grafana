@@ -25,11 +25,12 @@
       "datasource": {
         "type": "prometheus"
       },
-      "description": "UPS Load based on watt specifications",
+      "description": "UPS Load",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds",
+            "seriesBy": "last"
           },
           "custom": {
             "axisBorderShow": false,
@@ -70,11 +71,19 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-green",
                 "value": 0
               },
               {
-                "color": "red",
+                "color": "dark-yellow",
+                "value": 40
+              },
+              {
+                "color": "orange",
+                "value": 60
+              },
+              {
+                "color": "dark-red",
                 "value": 80
               }
             ]
@@ -109,45 +118,14 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "network_ups_tools_ups_load{ups=\"primary\"}/100",
+          "expr": "network_ups_tools_ups_load{ups=\"primary\"}",
           "hide": false,
-          "legendFormat": "__auto",
+          "legendFormat": "Load %",
           "range": true,
           "refId": "A"
         }
       ],
       "title": "UPS Load",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "watt",
-            "binary": {
-              "left": {
-                "fixed": "400"
-              },
-              "operator": "*",
-              "right": {
-                "matcher": {
-                  "id": "byName",
-                  "options": "{instance=\"nut-exporter:9199\", job=\"ups-primary\", ups=\"primary\"}"
-                }
-              }
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            },
-            "replaceFields": true,
-            "window": {
-              "reducer": "mean",
-              "windowAlignment": "trailing",
-              "windowSize": 0.1,
-              "windowSizeMode": "percentage"
-            }
-          }
-        }
-      ],
       "type": "timeseries"
     },
     {

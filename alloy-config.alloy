@@ -1,10 +1,49 @@
+discovery.relabel "syslog" {
+  targets = []
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "host"
+  }
+
+  rule {
+    source_labels = ["__syslog_connection_ip_address"]
+    target_label  = "ip"
+  }
+}
+
 loki.source.syslog "syslog" {
   listener {
     address = "0.0.0.0:514"
     protocol = "udp"
-    labels = { component = "loki.source.syslog", protocol = "udp", service = "syslog-default"}
+    labels = { service = "syslog-default" }
     rfc3164_default_to_current_year = true
     syslog_format = "rfc3164"
+  }
+  
+  listener {
+    address = "0.0.0.0:514"
+    protocol = "tcp"
+    labels = { service = "syslog-default" }
+    use_rfc5424_message = true
+    syslog_format = "rfc5424"
+  }
+
+  relabel_rules = discovery.relabel.syslog.rules
+
+  forward_to = [
+    loki.write.local.receiver,
+    // loki.echo.console.receiver,
+  ]
+}
+
+loki.source.syslog "rsyslog" {
+  listener {
+    address = "0.0.0.0:601"
+    protocol = "tcp"
+    labels = { service = "rsyslog" }
+    use_rfc5424_message = true
+    syslog_format = "rfc5424"
   }
 
   forward_to = [
@@ -13,10 +52,11 @@ loki.source.syslog "syslog" {
   ]
 }
 
+
 loki.write "local" {
   endpoint {
     url = "http://loki:3100/loki/api/v1/push"
   }
 }
 
-// loki.echo "console" { }
+loki.echo "console" { }

@@ -31,14 +31,26 @@ services:
       - ./loki.yaml:/etc/loki/config.yaml:ro
     depends_on:
       - alloy
+    restart: unless-stopped
 
   alloy:
     image: grafana/alloy
     volumes:
       - ./alloy-config.alloy:/etc/alloy/config.alloy:ro
     ports:
+      - 514:514/tcp
       - 514:514/udp
     restart: unless-stopped
+
+  rsyslog: # For Legacy Cisco Devices That likes to do whatever they want
+    image: rsyslog/rsyslog
+    volumes:
+      - ./rsyslog.conf:/etc/rsyslog.d/rsyslog.conf:ro
+    ports:
+      - 5141:514/udp
+    restart: unless-stopped
+    depends_on:
+      - alloy
 
   nut-exporter:
     image: druggeri/nut_exporter
