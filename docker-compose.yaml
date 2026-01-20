@@ -29,9 +29,9 @@ services:
     volumes:
       - loki-storage:/loki
       - ./loki.yaml:/etc/loki/config.yaml:ro
+    restart: unless-stopped
     depends_on:
       - alloy
-    restart: unless-stopped
 
   alloy:
     image: grafana/alloy

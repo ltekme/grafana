@@ -14,3 +14,9 @@ scrape_configs:
       username: [ "monuser" ]
       password: [ "secret" ]
       server: [ "ups.internal.ltek.me" ]
+
+  - job_name: openwrt
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['gw.internal.ltek.me:9100']
+

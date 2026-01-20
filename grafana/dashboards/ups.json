@@ -118,7 +118,7 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "network_ups_tools_ups_load{ups=\"primary\"}",
+          "expr": "network_ups_tools_ups_load{ups=\"primary\",job=\"ups-primary\"}",
           "hide": false,
           "legendFormat": "Load %",
           "range": true,
@@ -215,7 +215,7 @@
             "type": "prometheus"
           },
           "editorMode": "builder",
-          "expr": "network_ups_tools_battery_voltage{ups=\"primary\"}",
+          "expr": "network_ups_tools_battery_voltage{ups=\"primary\",job=\"ups-primary\"}",
           "legendFormat": "Volt",
           "range": true,
           "refId": "A"
@@ -307,7 +307,7 @@
             "type": "prometheus"
           },
           "editorMode": "builder",
-          "expr": "network_ups_tools_input_voltage{job=\"ups-primary\"}",
+          "expr": "network_ups_tools_input_voltage{ups=\"primary\",job=\"ups-primary\"}",
           "legendFormat": "Volt",
           "range": true,
           "refId": "A"
