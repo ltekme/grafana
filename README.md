@@ -26,3 +26,7 @@ EOF
 ```sh
 /etc/init.d/prometheus-node-exporter-lua restart
 ```
+
+## Setup pve
+
+https://github.com/prometheus-pve/prometheus-pve-exporter
