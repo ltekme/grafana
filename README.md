@@ -29,4 +29,8 @@ EOF
 
 ## Setup pve
 
-https://github.com/prometheus-pve/prometheus-pve-exporter
+[https://github.com/prometheus-pve/prometheus-pve-exporter](https://github.com/prometheus-pve/prometheus-pve-exporter)
+
+## Setup Kuma
+
+[https://github.com/louislam/uptime-kuma](https://github.com/louislam/uptime-kuma)

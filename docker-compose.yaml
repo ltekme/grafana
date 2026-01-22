@@ -15,11 +15,12 @@ services:
     image: prom/prometheus
     volumes:
       - ./prometheus-config.yaml:/etc/prometheus/prometheus.yml:ro
+      - ./kuma.password:/kuma.password:ro
       - prometheus-storage:/prometheus
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention.time=1y'
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=1y"
     restart: unless-stopped
     depends_on:
       - nut-exporter
