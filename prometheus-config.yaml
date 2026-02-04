@@ -16,7 +16,8 @@ scrape_configs:
       server: [ "ups.internal.ltek.me" ]
 
   - job_name: openwrt
-    scrape_interval: 5s
+    scrape_interval: 30s
+    scrape_timeout: 20s
     static_configs:
       - targets: ['gw.internal.ltek.me:9100']
 
