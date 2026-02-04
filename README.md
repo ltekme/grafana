@@ -34,3 +34,7 @@ EOF
 ## Setup Kuma
 
 [https://github.com/louislam/uptime-kuma](https://github.com/louislam/uptime-kuma)
+
+## Setup linux-iso
+
+[https://github.com/esanchezm/prometheus-qbittorrent-exporter/tree/master](https://github.com/esanchezm/prometheus-qbittorrent-exporter/tree/master)
