@@ -24,6 +24,7 @@ services:
     restart: unless-stopped
     depends_on:
       - nut-exporter
+      - qittorren-exporter
 
   loki:
     image: grafana/loki
@@ -55,6 +56,14 @@ services:
 
   nut-exporter:
     image: druggeri/nut_exporter
+    restart: unless-stopped
+
+  qittorren-exporter:
+    image: ghcr.io/esanchezm/prometheus-qbittorrent-exporter
+    environment:
+      - QBITTORRENT_PORT=8080
+      - QBITTORRENT_HOST=iso.internal.ltek.me
+      - QBITTORRENT_SSL=False
     restart: unless-stopped
 
 volumes:
