@@ -916,7 +916,7 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "((pve_cpu_usage_ratio{job=~\"pve\"} / pve_cpu_usage_limit) * on(id, job) group_left(name, type) pve_guest_info) and on(id, job) pve_up == 1",
+          "expr": "((pve_cpu_usage_ratio{job=~\"pve\"} / pve_cpu_usage_limit) * on(id, job) group_left(name, type) max by (id, job, name, type) (pve_guest_info)) and on(id, job) pve_up == 1",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 4,
@@ -1019,7 +1019,7 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(pve_memory_usage_bytes{job=~\"pve\"} / pve_memory_size_bytes * on(id, job) group_left(name, type) pve_guest_info) and on(id, job) pve_up == 1",
+          "expr": "(pve_memory_usage_bytes{job=~\"pve\"} / pve_memory_size_bytes * on(id, job) group_left(name, type) max by (id, job, name, type) (pve_guest_info)) and on(id, job) pve_up == 1",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 4,
@@ -1136,7 +1136,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "(rate(pve_network_transmit_bytes_total{job=~\"pve\"}[5m])* on(id, job) group_left(name, type) pve_guest_info) and on(id, job) pve_up == 1",
+          "expr": "(rate(pve_network_transmit_bytes_total{job=~\"pve\"}[5m])* on(id, job) group_left(name, type) max by (id, job, name, type) (pve_guest_info)) and on(id, job) pve_up == 1",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -1258,7 +1258,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "(rate(pve_network_receive_bytes_total{job=~\"pve\"}[5m])* on(id, job) group_left(name, type) pve_guest_info) and on(id, job) pve_up == 1",
+          "expr": "(rate(pve_network_receive_bytes_total{job=~\"pve\"}[5m])* on(id, job) group_left(name, type) max by (id, job, name, type) (pve_guest_info)) and on(id, job) pve_up == 1",
           "hide": false,
           "instant": false,
           "legendFormat": "{{id}} ({{name}})",
@@ -1361,7 +1361,7 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(rate(pve_disk_written_bytes_total{job=~\"pve\"}[5m]) * on(id, job) group_left(name, type) pve_guest_info) and on(id, job) pve_up == 1",
+          "expr": "(rate(pve_disk_written_bytes_total{job=~\"pve\"}[5m]) * on(id, job) group_left(name, type) max by (id, job, name, type) (pve_guest_info)) and on(id, job) pve_up == 1",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1465,7 +1465,7 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(rate(pve_disk_read_bytes_total{job=~\"pve\"}[5m]) * on(id, job) group_left(name, type) pve_guest_info) and on(id, job) pve_up == 1",
+          "expr": "(rate(pve_disk_read_bytes_total{job=~\"pve\"}[5m]) * on(id, job) group_left(name, type) max by (id, job, name, type) (pve_guest_info)) and on(id, job) pve_up == 1",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1493,5 +1493,5 @@
   "timezone": "",
   "title": "Proxmox",
   "uid": "tyfyguihoj",
-  "version": 4
+  "version": 1
 }
