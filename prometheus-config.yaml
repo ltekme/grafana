@@ -29,7 +29,7 @@ scrape_configs:
     params:
       cluster: ['1']
       node: ['0']
-      target: ['pve0.internal.ltek.me']
+      target: ['pve.internal.ltek.me']
 
   - job_name: kuma
     scrape_interval: 20s
