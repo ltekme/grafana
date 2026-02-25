@@ -1,2 +1,3 @@
 *.env
 *.password
+docker-compose.override.yml
