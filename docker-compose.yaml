@@ -49,7 +49,8 @@ services:
     volumes:
       - ./rsyslog.conf:/etc/rsyslog.d/rsyslog.conf:ro
     ports:
-      - 5141:514/udp
+      - 1514:514/udp
+      - 1514:514/tcp
     restart: unless-stopped
     depends_on:
       - alloy
