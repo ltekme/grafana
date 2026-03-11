@@ -38,3 +38,25 @@ EOF
 ## Setup linux-iso
 
 [https://github.com/esanchezm/prometheus-qbittorrent-exporter/tree/master](https://github.com/esanchezm/prometheus-qbittorrent-exporter/tree/master)
+
+## Backup Up and Restore
+
+'''sh
+docker run -it \
+-v grafana_grafana-storage:/grafana_grafana-storage:ro \
+-v grafana_loki-storage:/grafana_loki-storage:ro \
+-v grafana_prometheus-storage:/grafana_prometheus-storage:ro \
+-v ./backups:/backup_dst \
+ubuntu tar --same-owner -czvf /backup_dst/grafana.tar /grafana_grafana-storage /grafana_loki-storage /grafana_prometheus-storage
+'''
+
+'''sh
+docker run -it \
+-v grafana_grafana-storage:/grafana_grafana-storage:rw \
+-v grafana_loki-storage:/grafana_loki-storage:rw \
+-v grafana_prometheus-storage:/grafana_prometheus-storage:rw \
+-v ./backups:/backup_dst:ro \
+ubuntu \
+bash -c "rm -rf /grafana_grafana-storage/* /grafana_prometheus-storage/* /grafana_prometheus-storage/* && tar --same-owner -xvf /backup_dst/grafana.tar -C /"
+'''
+
