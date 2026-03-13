@@ -31,10 +31,7 @@ loki.source.syslog "syslog" {
 
   relabel_rules = discovery.relabel.syslog.rules
 
-  forward_to = [
-    loki.write.local.receiver,
-    // loki.echo.console.receiver,
-  ]
+  forward_to = [loki.write.default.receiver]
 }
 
 loki.source.syslog "rsyslog" {
@@ -46,17 +43,36 @@ loki.source.syslog "rsyslog" {
     syslog_format = "rfc5424"
   }
 
-  forward_to = [
-    loki.write.local.receiver,
-    // loki.echo.console.receiver,
-  ]
+  forward_to = [loki.write.default.receiver]
 }
 
+otelcol.receiver.otlp "default" {
+  http { 
+    endpoint = "0.0.0.0:4318"
+  }
 
-loki.write "local" {
+  output {
+    metrics = [otelcol.exporter.prometheus.default.input]
+    logs    = [otelcol.exporter.loki.default.input]
+  }
+}
+
+otelcol.exporter.loki "default" {
+  forward_to = [loki.write.default.receiver]
+}
+
+otelcol.exporter.prometheus "default" {
+  forward_to = [prometheus.remote_write.default.receiver]
+}
+
+prometheus.remote_write "default" {
+  endpoint {
+    url = "http://prometheus:9090/api/v1/write"
+  }
+}
+
+loki.write "default" {
   endpoint {
     url = "http://loki:3100/loki/api/v1/push"
   }
 }
-
-loki.echo "console" { }

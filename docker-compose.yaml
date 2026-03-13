@@ -21,6 +21,7 @@ services:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
       - "--storage.tsdb.retention.time=90d"
+      - "--web.enable-remote-write-receiver"
     restart: unless-stopped
     depends_on:
       - nut-exporter
@@ -32,8 +33,6 @@ services:
       - loki-storage:/loki
       - ./loki.yaml:/etc/loki/config.yaml:ro
     restart: unless-stopped
-    depends_on:
-      - alloy
 
   alloy:
     image: grafana/alloy
@@ -42,7 +41,11 @@ services:
     ports:
       - 514:514/tcp
       - 514:514/udp
+      - 4318:4318/tcp
     restart: unless-stopped
+    depends_on:
+      - prometheus
+      - loki
 
   rsyslog: # For Legacy Cisco Devices That likes to do whatever they want
     image: rsyslog/rsyslog
